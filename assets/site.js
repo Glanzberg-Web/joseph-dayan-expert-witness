@@ -3,36 +3,29 @@
   document.querySelectorAll('[data-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });
 
   const toggle = document.querySelector('[data-menu-toggle]');
-  const mobileNav = document.querySelector('#mobile-nav');
-  if (toggle && mobileNav) {
-    const close = () => { toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open navigation'); mobileNav.hidden = true; };
+  const menu = document.querySelector('#mobile-nav');
+  if (toggle && menu) {
+    const close = () => {
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation');
+    };
     toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      toggle.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-      mobileNav.hidden = expanded;
+      const shouldOpen = menu.hidden;
+      menu.hidden = !shouldOpen;
+      toggle.setAttribute('aria-expanded', String(shouldOpen));
+      toggle.setAttribute('aria-label', shouldOpen ? 'Close navigation' : 'Open navigation');
     });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  }
-
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ready');
-  const reveals = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
-    }, { threshold: 0.07, rootMargin: '0px 0px 30px 0px' });
-    reveals.forEach(el => observer.observe(el));
-  } else {
-    reveals.forEach(el => el.classList.add('visible'));
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
   }
 
   const form = document.querySelector('[data-inquiry-form]');
   if (!form) return;
   const submit = form.querySelector('[data-submit]');
   const status = form.querySelector('[data-form-status]');
-  const initialLabel = submit.innerHTML;
-  const notice = (state, message) => {
+  const originalText = submit.innerHTML;
+  const show = (state, message) => {
     status.dataset.state = state;
     status.textContent = message;
     status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -43,17 +36,17 @@
     if (!form.reportValidity()) return;
     const fields = new FormData(form);
     if (fields.get('consent') !== 'yes') {
-      notice('error', 'Please confirm that you will not share confidential case information.');
+      show('error', 'Please acknowledge the confidentiality notice.');
       return;
     }
     const data = Object.fromEntries(fields.entries());
     submit.disabled = true;
-    submit.textContent = 'Sending inquiry…';
-    status.removeAttribute('data-state');
+    submit.textContent = 'Submitting…';
+    delete status.dataset.state;
     status.textContent = '';
-
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
     try {
       const response = await fetch(form.action, {
         method: 'POST',
@@ -63,19 +56,19 @@
       });
       const result = await response.json().catch(() => null);
       if (response.ok && result && result.ok) {
-        notice('success', 'Thank you. Your inquiry has been submitted. If follow-up is appropriate, you will receive a response using the contact information supplied.');
+        show('success', 'Thank you. Your inquiry has been submitted.');
         form.reset();
       } else if (response.status === 503 || response.status === 404 || !result) {
-        notice('info', 'Online inquiry delivery has not been activated yet. No message was sent. Please try again once business email setup is complete.');
+        show('info', 'Online submissions have not yet been activated. No inquiry was delivered.');
       } else {
-        notice('error', (result && result.message) || 'We could not submit this inquiry. No message was confirmed as delivered. Please try again later.');
+        show('error', (result && result.message) || 'We could not submit your inquiry. No delivery was confirmed.');
       }
-    } catch (error) {
-      notice('error', 'The inquiry could not be submitted. No delivery was confirmed. Please check your connection and try again later.');
+    } catch {
+      show('error', 'We could not submit your inquiry. No delivery was confirmed. Please try again later.');
     } finally {
-      window.clearTimeout(timeout);
+      clearTimeout(timeout);
       submit.disabled = false;
-      submit.innerHTML = initialLabel;
+      submit.innerHTML = originalText;
     }
   });
 })();
