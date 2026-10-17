@@ -1,6 +1,6 @@
 # Joseph Dayan, MD — Medical Consulting Website
 
-A static website for Dr. Joseph Dayan, MD, FAAP, with a temporary work-in-progress homepage while the full site is under review.
+A static medical-legal consultant website for Dr. Joseph Dayan, MD, FAAP, with a temporary work-in-progress homepage while the full site is under review.
 
 ## Current arrangement
 
@@ -19,10 +19,13 @@ Plain HTML, CSS, and JavaScript: no build command or runtime required. On a stat
 Do not set `/joey` as the publish directory; doing so would replace the temporary public homepage with the working website. If the host requires an explicit index URL, use `/joey/index.html`.
 
 The Work in Progress page provides direct contact links:
-- Email: [josephdayan@gmail.com](mailto:josephdayan@gmail.com)
+- Email: [JDayan@med.miami.edu](mailto:JDayan@med.miami.edu)
 - WhatsApp: [wa.me/17325704002](https://wa.me/17325704002)
+- Phone: [+1 (732) 570-4002](tel:+17325704002)
+- Case review form: [Google Form](https://forms.gle/TR62N1rK4yp2iiuk6)
+- LinkedIn: [Joseph Dayan MD](https://www.linkedin.com/in/joseph-dayan-md-79019a79)
 
-No form service or Resend account is required. Direct email and WhatsApp links remain present on the preview site. Do not send privileged materials or patient information using general contact links.
+No form service or Resend account is required. The preview site links to a third-party Google Form and offers email, WhatsApp, and phone contact. Do not send privileged materials or patient information using general contact links.
 
 ## Before final publication
 
