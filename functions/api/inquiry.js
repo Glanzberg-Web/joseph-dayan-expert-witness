@@ -1,100 +1,74 @@
-// Cloudflare Pages Function: POST /api/inquiry
-// The site remains static. This endpoint is activated only when Resend secrets are configured.
-// Never put RESEND_API_KEY or recipient email into browser-side JavaScript.
-const respond = (status, payload) => new Response(JSON.stringify(payload), {
-  status,
-  headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }
+// Cloudflare Pages Function - POST /api/inquiry
+// Requires RESEND_API_KEY, INQUIRY_TO_EMAIL and INQUIRY_FROM_EMAIL as server-side variables.
+const reply = (code, data) => new Response(JSON.stringify(data), {
+  status: code, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }
 });
-
-const safe = (value, length = 150) =>
-  typeof value === 'string' ? value.replace(/[\r\n\t]+/g, ' ').trim().slice(0, length) : '';
-
-const choices = {
-  specialty: ['Pediatric Cardiac Anesthesiology', 'Pediatric Anesthesiology', 'Pediatric Critical Care', 'Multiple / Unsure'],
-  timeline: ['', 'Within 2 weeks', 'Within 1 month', '1–3 months', 'Flexible / Unsure']
-};
+const clean = (v, max) => typeof v === 'string' ? v.replace(/[\r\n\t]/g, ' ').trim().slice(0, max) : '';
+const specialties = ['Pediatric Cardiac Anesthesiology', 'Pediatric Anesthesiology', 'Pediatric Critical Care', 'Multiple / Unsure'];
 
 export async function onRequestPost({ request, env }) {
-  // Ignore cross-origin form submissions.
   const origin = request.headers.get('Origin');
-  if (origin && origin !== new URL(request.url).origin) {
-    return respond(403, { ok: false, message: 'Unable to accept this request.' });
-  }
-  if (!(request.headers.get('content-type') || '').toLowerCase().includes('application/json')) {
-    return respond(415, { ok: false, message: 'Unsupported request format.' });
-  }
-  const length = Number(request.headers.get('content-length') || 0);
-  if (length > 9000) return respond(413, { ok: false, message: 'Inquiry is too long.' });
+  if (origin && origin !== new URL(request.url).origin) return reply(403, {ok:false, message:'Unable to accept this request.'});
+  if (!(request.headers.get('content-type') || '').toLowerCase().includes('application/json')) return reply(415, {ok:false, message:'Unsupported request format.'});
+  if (Number(request.headers.get('content-length') || 0) > 9000) return reply(413, {ok:false, message:'Inquiry is too long.'});
 
-  let payload;
+  let input;
   try {
     const body = await request.text();
-    if (body.length > 9000) return respond(413, { ok: false, message: 'Inquiry is too long.' });
-    payload = JSON.parse(body);
-    if (!payload || Array.isArray(payload) || typeof payload !== 'object') throw Error('Invalid');
+    if (body.length > 9000) return reply(413, {ok:false, message:'Inquiry is too long.'});
+    input = JSON.parse(body);
+    if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('Invalid body');
   } catch {
-    return respond(400, { ok: false, message: 'The request could not be read.' });
+    return reply(400, {ok:false, message:'Invalid inquiry.'});
   }
 
-  // Honeypot: do not reveal rejection to bots.
-  if (safe(payload.website)) return respond(200, { ok: true });
+  if (clean(input.website, 100)) return reply(200, {ok:true}); // honeypot
+  const name = clean(input.fullName, 160);
+  const firm = clean(input.firm, 150);
+  const email = clean(input.email, 190).toLowerCase();
+  const phone = clean(input.phone, 45);
+  const specialty = clean(input.specialty, 90);
+  const message = typeof input.message === 'string' ? input.message.trim().slice(0, 1200).replace(/[\u0000-\u001f\u007f]/g, ' ') : '';
 
-  const firstName = safe(payload.firstName, 80);
-  const lastName = safe(payload.lastName, 80);
-  const firm = safe(payload.firm, 150);
-  const email = safe(payload.email, 190).toLowerCase();
-  const phone = safe(payload.phone, 45);
-  const specialty = safe(payload.specialty, 90);
-  const timeline = safe(payload.timeline, 40);
-  const message = typeof payload.message === 'string' ? payload.message.trim().slice(0, 1200) : '';
-  const consent = payload.consent === 'yes';
-  if (!firstName || !lastName || !firm || !email || !consent ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-      !choices.specialty.includes(specialty) || !choices.timeline.includes(timeline)) {
-    return respond(400, { ok: false, message: 'Please check all required fields and try again.' });
+  if (!name || !firm || !email || input.consent !== 'yes' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !specialties.includes(specialty)) {
+    return reply(400, {ok:false, message:'Please complete all required fields.'});
   }
-
-  if (!env.RESEND_API_KEY || !env.INQUIRY_TO_EMAIL || !env.INQUIRY_FROM_EMAIL) {
-    return respond(503, { ok: false, message: 'Online inquiries are not configured yet.' });
+  if (!env.RESEND_API_KEY || !env.INQUIRY_FROM_EMAIL || !env.INQUIRY_TO_EMAIL) {
+    return reply(503, {ok:false, message:'Online inquiries are not configured yet.'});
   }
 
   const summary = [
-    'New attorney inquiry via joseph-dayan-expert-witness website',
+    'Medical expert witness inquiry',
     '',
-    'First name: ' + firstName,
-    'Last name: ' + lastName,
-    'Organization: ' + firm,
-    'Professional email: ' + email,
+    'Name: ' + name,
+    'Firm / organization: ' + firm,
+    'Email: ' + email,
     'Phone: ' + (phone || 'Not provided'),
     'Area of inquiry: ' + specialty,
-    'Timeline: ' + (timeline || 'Not provided'),
     '',
-    'Nonconfidential inquiry description:',
-    message.replace(/[\u0000-\u001f\u007f]/g, ' ').slice(0, 1200) || 'Not provided',
+    'General nonconfidential description:',
+    message || 'Not provided',
     '',
-    'Requesting counsel confirmed the nonconfidential-submission warning.',
-    'This form does not establish a professional engagement.'
+    'Sender acknowledged the no-confidential-information warning.',
+    'A submission does not establish an engagement.'
   ].join('\n');
 
   try {
-    const sent = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: env.INQUIRY_FROM_EMAIL,
-        to: [env.INQUIRY_TO_EMAIL],
-        reply_to: email,
-        subject: 'New medical expert witness inquiry',
-        text: summary
+    const result = await fetch('https://api.resend.com/emails', {
+      method:'POST',
+      headers:{'Authorization':'Bearer ' + env.RESEND_API_KEY, 'Content-Type':'application/json'},
+      body:JSON.stringify({
+        from:env.INQUIRY_FROM_EMAIL,
+        to:[env.INQUIRY_TO_EMAIL],
+        reply_to:email,
+        subject:'New expert witness case inquiry',
+        text:summary
       })
     });
-    if (!sent.ok) return respond(502, { ok: false, message: 'The inquiry could not be delivered. Please try again later.' });
-    return respond(200, { ok: true });
+    if (!result.ok) return reply(502, {ok:false, message:'Inquiry delivery was unsuccessful. Please try again later.'});
+    return reply(200, {ok:true});
   } catch {
-    return respond(502, { ok: false, message: 'The inquiry service is temporarily unavailable.' });
+    return reply(502, {ok:false, message:'The inquiry service is temporarily unavailable.'});
   }
 }
-
-export function onRequestGet() {
-  return respond(405, { ok: false, message: 'Method not allowed.' });
-}
+export function onRequestGet() { return reply(405, {ok:false, message:'Method not allowed.'}); }
