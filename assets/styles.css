@@ -147,6 +147,7 @@ h1,h2,h3{line-height:1.2}
 .hero-photo{min-height:475px}
 .hero-description{font-size:14px}
 .hero-name{font-size:20px}
+.focus-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .focus-card{padding:22px;min-height:260px}
 .focus-card h3{font-size:22px}
 .about-layout,.services-layout,.contact-layout{gap:36px}
