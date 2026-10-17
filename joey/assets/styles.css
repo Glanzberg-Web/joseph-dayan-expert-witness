@@ -243,3 +243,11 @@ h1,h2,h3{line-height:1.2}
  .brand-specialty{max-width:210px;font-size:8px!important}
  .brand-mark{display:none}
 }
+
+/* Dayan review refinements */
+.hero-call-link{display:inline-flex;align-items:center;gap:12px;color:#f2f6f5;font:700 12px/1.6 var(--ui);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--gold);margin-top:18px;transition:color .2s}
+.hero-call-link:hover{color:var(--gold)}
+.hero-call-link span{color:var(--gold);font-size:17px}
+.focus-card h3{margin-top:0}
+.about-copy p strong{font-weight:700;color:var(--navy)}
+@media(max-width:670px){.hero-call-link{margin-top:20px}}
