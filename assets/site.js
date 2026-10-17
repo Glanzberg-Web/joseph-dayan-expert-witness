@@ -16,6 +16,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
 
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ready');
   const reveals = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const observer = new IntersectionObserver(entries => {
