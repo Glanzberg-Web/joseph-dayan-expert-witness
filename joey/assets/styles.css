@@ -245,9 +245,14 @@ h1,h2,h3{line-height:1.2}
 }
 
 /* Dayan review refinements */
-.hero-call-link{display:inline-flex;align-items:center;gap:12px;color:#f2f6f5;font:700 12px/1.6 var(--ui);text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--gold);margin-top:18px;transition:color .2s}
-.hero-call-link:hover{color:var(--gold)}
-.hero-call-link span{color:var(--gold);font-size:17px}
 .focus-card h3{margin-top:0}
 .about-copy p strong{font-weight:700;color:var(--navy)}
-@media(max-width:670px){.hero-call-link{margin-top:20px}}
+
+/* Phone contact alongside WhatsApp and in the contact card */
+.hero-secondary-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.hero-phone-link{display:inline-flex;align-items:center;gap:9px;color:#f3f5f3;border-bottom:1px solid rgba(215,190,145,.7);padding:9px 0;font:700 12px/1.4 var(--ui);white-space:nowrap;transition:color .2s}
+.hero-phone-link:hover{color:var(--gold)}
+.phone-icon{display:inline-block;flex:none;width:20px;height:20px}
+.contact-option-label .phone-icon{width:24px;height:24px}
+.hero-actions{column-gap:24px;row-gap:16px}
+@media(max-width:670px){.hero-secondary-actions{gap:12px 22px}.hero-phone-link{font-size:12px}}
