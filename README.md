@@ -29,6 +29,6 @@ No form service or Resend account is required. The preview site links to a third
 
 ## Before final publication
 
-Confirm the biography, academic title, certifications, consulting services, and rights to use the University of Miami-hosted professional portrait. Approve the privacy notice and set a domain and canonical URL once the website is ready. Academic affiliations do not imply institutional endorsement.
+Confirm the biography, academic title, certifications, consulting services, and use of the locally hosted, professionally edited portrait (`joey/assets/joseph-dayan-portrait.webp`), including the embroidered institutional branding. Approve the privacy notice and set a domain and canonical URL once the website is ready. Academic affiliations do not imply institutional endorsement.
 
 Source: [University of Miami faculty profile](https://med.miami.edu/faculty/joseph-dayan-md-faap).
