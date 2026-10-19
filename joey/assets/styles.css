@@ -256,3 +256,13 @@ h1,h2,h3{line-height:1.2}
 .contact-option-label .phone-icon{width:24px;height:24px}
 .hero-actions{column-gap:24px;row-gap:16px}
 @media(max-width:670px){.hero-secondary-actions{gap:12px 22px}.hero-phone-link{font-size:12px}}
+
+/* Faculty and LinkedIn profile links */
+.profile-links .underlined-link{gap:8px;min-height:32px;white-space:normal}
+.profile-links .underlined-link span{margin-left:5px}
+.profile-link-icon{display:block;object-fit:contain;flex:none}
+.um-profile-icon{width:31px;height:22px}
+.linkedin-profile-icon{width:19px;height:19px}
+.brand-specialty{max-width:285px}
+@media(max-width:670px){.brand-specialty{max-width:260px}}
+@media(max-width:370px){.brand-specialty{max-width:230px}}
