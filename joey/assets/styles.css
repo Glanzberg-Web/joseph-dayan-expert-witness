@@ -181,7 +181,7 @@ h1,h2,h3{line-height:1.2}
 .focus-card p{max-width:none}
 .services-layout,.about-layout,.contact-layout{gap:34px}
 .services-intro>p:last-child{margin-top:13px}
-.services-intro h2 br,.about-copy h2 br{display:none}
+/* Decorative desktop heading breaks now use block-level emphasis, not hidden <br> elements. */
 .boards{padding:28px 30px}
 .contact-note{margin-top:28px}
 .footer-content{grid-template-columns:1fr;gap:16px;padding:39px 0 0}
@@ -266,3 +266,23 @@ h1,h2,h3{line-height:1.2}
 .brand-specialty{max-width:285px}
 @media(max-width:670px){.brand-specialty{max-width:260px}}
 @media(max-width:370px){.brand-specialty{max-width:230px}}
+
+/* Mobile text-flow and cross-platform icon rendering (Oct 2026) */
+.services-intro h2 em,
+.about-copy h2 em,
+.contact-copy h2 em{display:block}
+.link-arrow{display:inline-block;width:18px;height:18px;min-width:18px;flex:none;vertical-align:middle;color:inherit;overflow:visible}
+.btn .link-arrow{width:17px;height:17px;min-width:17px}
+.subtle-link .link-arrow{color:var(--gold)}
+.underlined-link .link-arrow{width:16px;height:16px;min-width:16px;color:var(--gold-dark);margin-left:4px}
+.contact-option-name>.link-arrow{width:20px;height:20px;min-width:20px;color:var(--gold-dark);margin-left:auto}
+.profile-links .underlined-link{gap:8px}
+.services-intro h2,.about-copy h2,.contact-copy h2{overflow-wrap:normal;word-break:normal}
+@media(max-width:670px){
+ .services-intro h2 em,
+ .about-copy h2 em,
+ .contact-copy h2 em{display:inline}
+ .services-intro h2,
+ .about-copy h2,
+ .contact-copy h2{text-wrap:pretty}
+}
