@@ -177,7 +177,7 @@ h1,h2,h3{line-height:1.2}
 .focus-grid{gap:11px}
 .focus-card{min-height:0;padding:23px 25px}
 .focus-card h3{font-size:24px;margin:12px 0}
-.focus-card h3 br{display:none}
+
 .focus-card p{max-width:none}
 .services-layout,.about-layout,.contact-layout{gap:34px}
 .services-intro>p:last-child{margin-top:13px}
