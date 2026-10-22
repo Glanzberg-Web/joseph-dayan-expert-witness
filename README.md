@@ -1,34 +1,47 @@
-# Joseph Dayan, MD — Medical Consulting Website
+# Joseph Dayan, MD — Medical-Legal Consulting
 
-A static medical-legal consultant website for Dr. Joseph Dayan, MD, FAAP, with a temporary work-in-progress homepage while the full site is under review.
+Client-facing static site for Dr. Joseph Dayan, MD, FAAP, available at **https://drjosephdayan.com/**.
 
-## Current arrangement
+## Launch configuration
 
-- **`/`** — temporary public-facing **Work in Progress** page (`index.html`)
-- **`/joey/`** — full working website (`joey/index.html`)
-- **`/joey/privacy.html`** — privacy notice for the full website
-- **`/joey/assets/`** — stylesheet, JavaScript, and favicon for the full website
-- Legacy page URLs (`/about.html`, `/expertise.html`, `/services.html`, `/contact.html`, and `/privacy.html`) redirect to their updated locations under `/joey/`.
+- **`/`** is now the complete public website; the temporary Work in Progress page has been replaced.
+- **`/privacy.html`** contains the privacy notice, which is intentionally excluded from search indexing.
+- **`/joey/`** and **`/joey/privacy.html`** forward to the new root URLs for anyone using older preview links.
+- Legacy `/about.html`, `/expertise.html`, `/services.html` and `/contact.html` URLs forward to their corresponding homepage sections.
+- The root **`CNAME`** file remains `drjosephdayan.com`; preserve it while hosting on GitHub Pages.
+- Static HTML, CSS, and JavaScript, with no build command or server-side form.
+- The primary photo is `assets/joseph-dayan-primary-2026.webp` and the branded 1200 × 630 social preview is `assets/social-preview.jpg`.
 
-The public landing page intentionally has no navigation to `/joey/`. The preview can be opened directly by someone who knows that path; **it is not password-protected**. The main and preview pages request no search indexing, but a URL with noindex is not private or access-restricted.
+### Search setup
 
-## Deployment
+The root homepage is indexable and includes its canonical URL, title, meta description, Open Graph and Twitter image metadata, and JSON-LD Person structured data. `robots.txt` points search engines to `/sitemap.xml`, which includes only the public homepage.
 
-Plain HTML, CSS, and JavaScript: no build command or runtime required. On a static host that serves folder `index.html` files, the website will resolve at `/joey/`. Publish the repository root as the site root (for Cloudflare Pages, publish directory `.` and no build command).
+After confirming the live deployment, add **drjosephdayan.com** to [Google Search Console](https://search.google.com/search-console/about), verify domain ownership, submit `https://drjosephdayan.com/sitemap.xml`, and request a crawl of the homepage. Search indexing can take time and is not guaranteed.
 
-Do not set `/joey` as the publish directory; doing so would replace the temporary public homepage with the working website. If the host requires an explicit index URL, use `/joey/index.html`.
+Domain handling: set the HTTPS/custom-domain options in your actual hosting provider. GitHub Pages does not support arbitrary 301 redirect rules in this repository; the old-page redirects use immediate HTML refresh plus JavaScript fallback. If the site is moved to a host supporting server-side redirects, replace these with HTTP 301 rules. Check that `www` directs to the chosen non-`www` canonical domain, rather than serving duplicate indexed content.
 
-The Work in Progress page provides direct contact links:
+### Privacy-conscious visitor analytics
+
+The website includes `assets/analytics.js`, prepared for **Cloudflare Web Analytics**. This service offers aggregate traffic, referral and performance analytics without advertising cookies, even when the website is hosted outside Cloudflare.
+
+**One account-level action is still required before analytics records traffic:**
+
+1. Have Dr. Dayan or the website owner create or access a [Cloudflare account](https://dash.cloudflare.com/).
+2. Under **Web Analytics**, add `drjosephdayan.com` and copy the beacon token from the installation snippet.
+3. Replace the empty `siteToken = ''` value in `assets/analytics.js` with the 32-character public token and publish the change. It is not an API secret.
+4. Open the live site and confirm page views, visitors and referring domains appear in the Cloudflare dashboard.
+
+If the production site is deployed through Cloudflare Pages with its own Web Analytics automatic injection enabled, use that option *instead* of configuring a second manual beacon to avoid double counting. Analytics isn't yet active while the token is empty. The privacy notice includes a conditional disclosure about analytics.
+
+### Consulting and contact
+
 - Email: [JDayan@med.miami.edu](mailto:JDayan@med.miami.edu)
 - WhatsApp: [wa.me/17325704002](https://wa.me/17325704002)
 - Phone: [+1 (732) 570-4002](tel:+17325704002)
-- Case review form: [Google Form](https://forms.gle/VSAVzxjfs5dsTmnk8)
-- LinkedIn: [Joseph Dayan MD](https://www.linkedin.com/in/joseph-dayan-md-79019a79)
+- Case review: [Google Form](https://forms.gle/VSAVzxjfs5dsTmnk8)
+- [UM Faculty Profile](https://med.miami.edu/faculty/joseph-dayan-md-faap)
+- [LinkedIn](https://www.linkedin.com/in/joseph-dayan-md-79019a79)
 
-No form service or Resend account is required. The preview site links to a third-party Google Form and offers email, WhatsApp, and phone contact. Do not send privileged materials or patient information using general contact links.
+Never submit patient records, privileged case materials, or confidential identifiers through general contact methods. Confirm the privacy notice and business practices as needed.
 
-## Before final publication
-
-Confirm the biography, academic title, certifications, consulting services, and use of the locally hosted, professionally edited portrait (`joey/assets/joseph-dayan-primary-2026.webp`), including the embroidered institutional branding. Approve the privacy notice and set a domain and canonical URL once the website is ready. Academic affiliations do not imply institutional endorsement. The University of Miami split-U mark is displayed solely as a link icon to Dr. Dayan's university faculty profile. University trademarks and institutional endorsement restrictions should be reviewed before launch.
-
-Source: [University of Miami faculty profile](https://med.miami.edu/faculty/joseph-dayan-md-faap).
+Academic affiliations do not imply institutional endorsement. The university U mark and UHealth lettering on the portrait should only be published with the appropriate authorization.
