@@ -1,47 +1,56 @@
-# Joseph Dayan, MD — Medical-Legal Consulting
+# Joseph Dayan, MD, FAAP
 
-Client-facing static site for Dr. Joseph Dayan, MD, FAAP, available at **https://drjosephdayan.com/**.
+**Medical-Legal Consultant | Pediatric Anesthesiology & Critical Care**
 
-## Launch configuration
+[**Visit DrJosephDayan.com**](https://drjosephdayan.com/)
 
-- **`/`** is now the complete public website; the temporary Work in Progress page has been replaced.
-- **`/privacy.html`** contains the privacy notice, which is intentionally excluded from search indexing.
-- **`/joey/`** and **`/joey/privacy.html`** forward to the new root URLs for anyone using older preview links.
-- Legacy `/about.html`, `/expertise.html`, `/services.html` and `/contact.html` URLs forward to their corresponding homepage sections.
-- The root **`CNAME`** file remains `drjosephdayan.com`; preserve it while hosting on GitHub Pages.
-- Static HTML, CSS, and JavaScript, with no build command or server-side form.
-- The primary photo is `assets/joseph-dayan-primary-2026.webp` and the branded 1200 × 630 social preview is `assets/social-preview.jpg`.
+## Independent Medical Expertise for Complex Pediatric Cases
 
-### Search setup
+Dr. Joseph Dayan provides independent medical-legal consultation for attorneys handling matters involving pediatric anesthesia, pediatric cardiac anesthesia, pediatric intensive care, and hospital-based pediatric medicine.
 
-The root homepage is indexable and includes its canonical URL, title, meta description, Open Graph and Twitter image metadata, and JSON-LD Person structured data. `robots.txt` points search engines to `/sitemap.xml`, which includes only the public homepage.
+His clinical and academic background informs a thoughtful, evidence-based approach to medical record review, standard-of-care analysis, and expert consultation. Each potential engagement is considered individually.
 
-After confirming the live deployment, add **drjosephdayan.com** to [Google Search Console](https://search.google.com/search-console/about), verify domain ownership, submit `https://drjosephdayan.com/sitemap.xml`, and request a crawl of the homepage. Search indexing can take time and is not guaranteed.
+## Areas of Expertise
 
-Domain handling: set the HTTPS/custom-domain options in your actual hosting provider. GitHub Pages does not support arbitrary 301 redirect rules in this repository; the old-page redirects use immediate HTML refresh plus JavaScript fallback. If the site is moved to a host supporting server-side redirects, replace these with HTTP 301 rules. Check that `www` directs to the chosen non-`www` canonical domain, rather than serving duplicate indexed content.
+- **Pediatric Cardiac Anesthesiology** — Congenital cardiac conditions, cardiac procedures, and perioperative care.
+- **Pediatric Anesthesiology** — Pediatric airway management, anesthesia, monitoring, and perioperative decisions.
+- **Pediatric Critical Care** — Intensive care management and clinical decision-making for critically ill children.
+- **General Pediatrics & Hospitalist Medicine** — Inpatient pediatric care and hospital-based clinical management.
 
-### Privacy-conscious visitor analytics
+## Medical-Legal Consulting Services
 
-The website includes `assets/analytics.js`, prepared for **Cloudflare Web Analytics**. This service offers aggregate traffic, referral and performance analytics without advertising cookies, even when the website is hosted outside Cloudflare.
+- Medical record and case review
+- Standard-of-care analysis
+- Expert reports and written opinions
+- Depositions and trial testimony
 
-**One account-level action is still required before analytics records traffic:**
+Services and availability are confirmed before engagement. **Consultation schedule of fees — available upon request.**
 
-1. Have Dr. Dayan or the website owner create or access a [Cloudflare account](https://dash.cloudflare.com/).
-2. Under **Web Analytics**, add `drjosephdayan.com` and copy the beacon token from the installation snippet.
-3. Replace the empty `siteToken = ''` value in `assets/analytics.js` with the 32-character public token and publish the change. It is not an API secret.
-4. Open the live site and confirm page views, visitors and referring domains appear in the Cloudflare dashboard.
+## Professional Background
 
-If the production site is deployed through Cloudflare Pages with its own Web Analytics automatic injection enabled, use that option *instead* of configuring a second manual beacon to avoid double counting. Analytics isn't yet active while the token is empty. The privacy notice includes a conditional disclosure about analytics.
+Dr. Dayan is an **Assistant Professor of Clinical Anesthesiology at the University of Miami Miller School of Medicine** and directs the **University of Miami Pediatric Anesthesiology Fellowship Program**.
 
-### Consulting and contact
+He holds four board certifications:
 
-- Email: [JDayan@med.miami.edu](mailto:JDayan@med.miami.edu)
-- WhatsApp: [wa.me/17325704002](https://wa.me/17325704002)
-- Phone: [+1 (732) 570-4002](tel:+17325704002)
-- Case review: [Google Form](https://forms.gle/VSAVzxjfs5dsTmnk8)
-- [UM Faculty Profile](https://med.miami.edu/faculty/joseph-dayan-md-faap)
-- [LinkedIn](https://www.linkedin.com/in/joseph-dayan-md-79019a79)
+- General Anesthesiology
+- Pediatric Anesthesiology
+- General Pediatrics
+- Pediatric Critical Care Medicine
 
-Never submit patient records, privileged case materials, or confidential identifiers through general contact methods. Confirm the privacy notice and business practices as needed.
+For further professional information, visit his [University of Miami faculty profile](https://med.miami.edu/faculty/joseph-dayan-md-faap) or [LinkedIn profile](https://www.linkedin.com/in/joseph-dayan-md-79019a79).
 
-Academic affiliations do not imply institutional endorsement. The university U mark and UHealth lettering on the portrait should only be published with the appropriate authorization.
+## Request a Case Review
+
+Attorneys may contact Dr. Dayan to discuss the nature of a matter, potential fit, and availability.
+
+**[Submit a Case Review Request](https://forms.gle/VSAVzxjfs5dsTmnk8)**
+
+**Email:** [JDayan@med.miami.edu](mailto:JDayan@med.miami.edu)  
+**Phone:** [(732) 570-4002](tel:+17325704002)  
+**WhatsApp:** [Message Dr. Dayan](https://wa.me/17325704002)
+
+Please do not send patient identifiers, medical records, privileged information, or other confidential case materials through these initial contact methods. Appropriate arrangements for reviewing confidential materials can be discussed if an engagement is accepted.
+
+---
+
+*Dr. Dayan's medical-legal consulting practice is independent. Academic and clinical affiliations are provided for professional identification and do not imply endorsement by the institutions named. Information provided here is not medical or legal advice, and an initial inquiry does not establish a consulting engagement.*
