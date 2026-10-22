@@ -29,6 +29,6 @@ No form service or Resend account is required. The preview site links to a third
 
 ## Before final publication
 
-Confirm the biography, academic title, certifications, consulting services, and use of the locally hosted, professionally edited portrait (`joey/assets/joseph-dayan-portrait.webp`), including the embroidered institutional branding. Approve the privacy notice and set a domain and canonical URL once the website is ready. Academic affiliations do not imply institutional endorsement. The University of Miami split-U mark is displayed solely as a link icon to Dr. Dayan's university faculty profile. University trademarks and institutional endorsement restrictions should be reviewed before launch.
+Confirm the biography, academic title, certifications, consulting services, and use of the locally hosted, professionally edited portrait (`joey/assets/joseph-dayan-primary-2026.webp`), including the embroidered institutional branding. Approve the privacy notice and set a domain and canonical URL once the website is ready. Academic affiliations do not imply institutional endorsement. The University of Miami split-U mark is displayed solely as a link icon to Dr. Dayan's university faculty profile. University trademarks and institutional endorsement restrictions should be reviewed before launch.
 
 Source: [University of Miami faculty profile](https://med.miami.edu/faculty/joseph-dayan-md-faap).
